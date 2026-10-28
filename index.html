@@ -1,0 +1,314 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mi malla | Dirección de Empresas</title>
+<style>
+:root{
+ --fondo:#fff7fa;--rosa:#f8dce8;--rosa2:#fcebf2;
+ --rosa3:#d982a8;--oscuro:#8e3d64;--texto:#79516a;
+ --borde:#f0cfdf;--blanco:#fffdfd;--verde:#dff2e4;
+ --gris:#f1edf0;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--fondo);color:var(--texto);font-family:Arial,Helvetica,sans-serif}
+button,input{font:inherit}
+button{cursor:pointer}
+.layout{max-width:1700px;margin:auto;padding:20px;display:grid;grid-template-columns:175px minmax(0,1fr) 220px;gap:15px}
+.sidebar,.hero,.ciclo,.panel,.info{background:#fffdfde8;border:1px solid var(--borde);border-radius:20px}
+.sidebar{padding:16px;height:max-content;position:sticky;top:12px}
+.brand{font: bold 20px Georgia;color:var(--oscuro);margin-bottom:22px}
+.nav{width:100%;text-align:left;border:0;background:transparent;color:var(--texto);padding:12px;border-radius:12px;margin:3px 0}
+.nav:hover,.nav.active{background:var(--rosa);color:var(--oscuro)}
+.legend{border-top:1px solid var(--borde);margin-top:18px;padding-top:14px;line-height:2.5;font-size:13px}
+.dot{display:inline-block;width:12px;height:12px;border-radius:50%;margin-right:7px}
+.hero{padding:24px;margin-bottom:14px;background:linear-gradient(120deg,#fffdfd,#f9e1ec)}
+h1{font:bold clamp(25px,3vw,39px) Georgia;margin:0;color:var(--oscuro)}
+.subtitle{margin:8px 0 20px;color:#ad7390}
+.actions{display:flex;flex-wrap:wrap;gap:8px}
+.btn{border:1px solid var(--borde);background:white;color:var(--oscuro);padding:10px 13px;border-radius:12px}
+.btn.primary{background:var(--rosa3);color:white;border-color:var(--rosa3)}
+.search{width:100%;padding:11px 13px;border:1px solid var(--borde);border-radius:12px;margin-top:14px;background:#fff}
+.cycles{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.ciclo{padding:10px;min-width:0}
+.ciclo h2{font:bold 19px Georgia;text-align:center;color:var(--oscuro);background:var(--rosa);padding:12px;margin:0 0 12px;border-radius:13px}
+.cursos{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}
+.curso{min-width:0;min-height:82px;border:1px solid var(--borde);background:var(--blanco);color:var(--texto);border-radius:11px;padding:9px;text-align:left;display:flex;flex-direction:column;justify-content:space-between;gap:7px;overflow-wrap:anywhere}
+.curso:hover{border-color:var(--rosa3)}
+.curso.aprobado{background:var(--verde);border-color:#b7dec1}
+.curso.encurso{background:#f5d8e6;border-color:#e3a8c2}
+.curso.bloqueado{background:var(--gris);color:#a79aa2}
+.sigla{font-size:10px;font-weight:bold}
+.nombre{font-size:12px;line-height:1.4}
+.meta{font-size:10px;opacity:.9}
+.subtotal{text-align:right;padding:12px 2px 3px;font-size:12px;font-weight:bold}
+.panel{padding:16px;margin-bottom:13px;height:max-content;min-width:0}
+.panel h3,.info h3{font:bold 19px Georgia;color:var(--oscuro);margin:0 0 14px}
+.circulo{width:105px;height:105px;border-radius:50%;margin:12px auto;display:grid;place-items:center;background:conic-gradient(var(--rosa3) var(--avance,0%),#f8e6ee 0);position:relative}
+.circulo:before{content:"";position:absolute;inset:10px;border-radius:50%;background:white}
+.circulo strong{position:relative;color:var(--oscuro);font-size:23px}
+.stat{display:flex;justify-content:space-between;gap:8px;padding:10px 0;border-bottom:1px solid #f5e7ee;font-size:13px}
+.stat strong{color:var(--oscuro)}
+.barra{height:8px;border-radius:10px;background:#f8e6ee;overflow:hidden;margin:12px 0}
+.barra div{height:100%;background:var(--rosa3);width:0;transition:width .2s}
+.pequeno{font-size:12px;line-height:1.6;color:#a17c90}
+.info{padding:18px 22px;margin-top:14px;line-height:1.8}
+.info ul{padding-left:20px}
+#listaProximos{white-space:pre-line}
+#listaRequisitos{padding-left:20px}
+#mensaje{margin-top:10px}
+footer{text-align:center;padding:22px;font-size:11px;color:#ad8297}
+@media(max-width:1050px){.layout{grid-template-columns:minmax(0,1fr) 210px;padding:12px}.sidebar{display:none}}
+@media(max-width:650px){
+ .layout{display:flex;flex-direction:column;padding:8px;gap:10px}
+ .cycles{grid-template-columns:1fr}
+ .hero{padding:18px}
+ .right{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+ .panel{padding:12px;margin:0}
+ .curso{min-height:78px;padding:8px}
+ .circulo{width:82px;height:82px}
+}
+@media print{
+ .sidebar,.actions,.search,.right,.info,footer{display:none!important}
+ .layout{display:block;padding:0}
+ .cycles{grid-template-columns:repeat(2,1fr)}
+ body{background:white}
+ .ciclo{break-inside:avoid}
+}
+</style>
+</head>
+<body>
+<div class="layout">
+<aside class="sidebar">
+ <div class="brand">♡ Mi malla</div>
+ <button class="nav active" onclick="irA('malla')">⌂ Malla curricular</button>
+ <button class="nav" onclick="irA('progreso')">♡ Mi progreso</button>
+ <button class="nav" onclick="mostrarRequisitos()">☷ Requisitos</button>
+ <div class="legend">
+  <div><span class="dot" style="background:#a8d9b8"></span>Aprobado</div>
+  <div><span class="dot" style="background:#e9b0ca"></span>En curso</div>
+  <div><span class="dot" style="background:white;border:1px solid #ddd"></span>Pendiente</div>
+  <div><span class="dot" style="background:#e9e3e7"></span>Bloqueado*</div>
+ </div>
+</aside>
+
+<main>
+<header class="hero">
+ <h1>🌸 Dirección de Empresas</h1>
+ <div class="subtitle">Universidad de Costa Rica · Mi camino profesional ♡</div>
+ <div class="actions">
+  <button class="btn" onclick="mostrarRequisitos()">ⓘ Mostrar requisitos</button>
+  <button class="btn primary" onclick="window.print()">⇩ Exportar PDF</button>
+  <button class="btn" onclick="reiniciar()">↻ Restablecer</button>
+ </div>
+ <input class="search" id="buscar" placeholder="⌕ Buscar curso por nombre o sigla..." oninput="render()">
+ <p class="pequeno">Florece a tu ritmo. Cada paso cuenta ♡</p>
+</header>
+
+<div class="cycles" id="malla"></div>
+
+<section class="info" id="info">
+ <h3>🌷 Instrucciones</h3>
+ <ul>
+  <li>Toca una materia para cambiar su estado: pendiente, en curso y aprobado.</li>
+  <li>Los cursos aprobados se muestran en verde y los que llevas actualmente, en rosa.</li>
+  <li>Busca cursos por nombre o sigla con la barra de búsqueda.</li>
+  <li>Consulta los requisitos y correquisitos desde el botón correspondiente.</li>
+  <li>Tu progreso se guarda en este navegador.</li>
+ </ul>
+ <p class="pequeno">*El estado de los cursos no se bloquea automáticamente por requisitos; verifica las condiciones oficiales de matrícula.</p>
+ <div id="mensaje" class="pequeno"></div>
+</section>
+</main>
+
+<aside class="right" id="progreso">
+ <section class="panel">
+  <h3>Mi progreso ♡</h3>
+  <div class="circulo" id="circulo"><strong id="porcentaje">0%</strong></div>
+  <div class="stat"><span>Créditos</span><strong id="creditos">0 / 163</strong></div>
+  <div class="stat"><span>Cursos aprobados</span><strong id="nAprobados">0</strong></div>
+  <div class="barra"><div id="barra"></div></div>
+  <div class="pequeno" id="restantes">163 créditos restantes</div>
+ </section>
+ <section class="panel">
+  <h3>Resultados rápidos</h3>
+  <div class="stat"><span>En curso</span><strong id="nCurso">0</strong></div>
+  <div class="stat"><span>Pendientes</span><strong id="nPendientes">0</strong></div>
+  <div class="stat"><span>Total de asignaturas</span><strong id="nTotal">0</strong></div>
+ </section>
+ <section class="panel">
+  <h3>Próximos cursos</h3>
+  <div id="listaProximos" class="pequeno">Tus próximos cursos aparecerán aquí.</div>
+ </section>
+</aside>
+</div>
+<footer>Hecho con cariño y tonos rosa pastel ✿ Tu camino, a tu ritmo ♡</footer>
+
+<script>
+const cursos = [
+{c:1,s:"DN0101",n:"Introducción a la Administración de Negocios",cr:3},
+{c:1,s:"EG-",n:"Curso de Arte",cr:2},
+{c:1,s:"EG-I",n:"Curso Integrado de Humanidades I",cr:6},
+{c:1,s:"MA0001",n:"Precálculo",cr:0},
+{c:1,s:"RP-1",n:"Repertorio",cr:3},
+{c:1,s:"XE0156",n:"Introducción a la Economía",cr:4},
+
+{c:2,s:"DN0102",n:"Aplicaciones Ofimáticas para la Toma de Decisiones",cr:3,r:["DN0101"]},
+{c:2,s:"EF-",n:"Actividad Deportiva",cr:0},
+{c:2,s:"EG-II",n:"Curso Integrado de Humanidades II",cr:6},
+{c:2,s:"MA1021",n:"Cálculo para Ciencias Económicas I",cr:4,r:["MA0001"]},
+{c:2,s:"PC0200",n:"Contabilidad Básica",cr:4,r:["DN0101"]},
+
+{c:3,s:"DN0103",n:"Administración de Proyectos y Herramientas para el Análisis de Datos",cr:3,r:["DN0102"]},
+{c:3,s:"MA1022",n:"Cálculo para Ciencias Económicas II",cr:4,r:["MA1021"]},
+{c:3,s:"OPT1231",n:"Opcional",cr:0},
+{c:3,s:"PC0202",n:"Contabilidad Intermedia I",cr:3,r:["PC0200"]},
+{c:3,s:"PC0240",n:"Matemática Financiera",cr:3,r:["MA1021"]},
+{c:3,s:"XS0276",n:"Estadística General I",cr:4,r:["MA0225"]},
+
+{c:4,s:"DN0104",n:"Elementos Fundamentales de Legislación Empresarial",cr:3,r:["DN0101"]},
+{c:4,s:"DN0123",n:"Metodología de la Investigación",cr:3,r:["XS0276"]},
+{c:4,s:"DN0340",n:"Administración Financiera I",cr:3,r:["PC0200","PC0240"]},
+{c:4,s:"PC0304",n:"Contabilidad Intermedia II",cr:3,r:["PC0202","PC0240"]},
+{c:4,s:"SR-I",n:"Seminario de Realidad Nacional I",cr:2},
+{c:4,s:"XS0277",n:"Estadística General II",cr:4,r:["MA1022","XS0276"]},
+
+{c:5,s:"DN0105",n:"Métodos Cuantitativos para la Toma de Decisiones I",cr:3,r:["DN0340","XS0277"],co:["DN0320","DN0341"]},
+{c:5,s:"DN0107",n:"Economía y Comercio Internacional",cr:3,r:["XE0156","XS0276"]},
+{c:5,s:"DN0202",n:"Principios de Gerencia",cr:3,r:["DN0340"],co:["DN0320"]},
+{c:5,s:"DN0320",n:"Principios de Mercadeo",cr:3,r:["PC0200","XS0276"],co:["DN0105"]},
+{c:5,s:"DN0341",n:"Administración Financiera II",cr:3,r:["DN0340","XS0277"],co:["DN0105"]},
+{c:5,s:"PC0261",n:"Legislación Comercial, Bancaria y Financiera",cr:3,r:["DN0104"]},
+
+{c:6,s:"DN0106",n:"Gestión del Talento y Conocimiento Humano",cr:3,r:["DN0202"]},
+{c:6,s:"DN0110",n:"Métodos Cuantitativos para la Toma de Decisiones II",cr:3,r:["DN0105"],co:["DN0442"]},
+{c:6,s:"DN0321",n:"Publicidad y Promoción",cr:3,r:["DN0320"]},
+{c:6,s:"DN0442",n:"Administración Financiera III",cr:3,r:["DN0341"],co:["DN0110"]},
+{c:6,s:"PC0260",n:"Legislación Laboral",cr:3,r:["PC0261"]},
+{c:6,s:"SR-II",n:"Seminario de Realidad Nacional II",cr:2},
+
+{c:7,s:"DN0304",n:"Liderazgo Gerencial",cr:3,r:["DN0106"]},
+{c:7,s:"DN0405",n:"Emprendimiento y Creación de Empresas",cr:3,r:["DN0106"],co:["DN0423"]},
+{c:7,s:"DN0423",n:"Investigación de Mercados",cr:3,r:["DN0321"],co:["DN0405"]},
+{c:7,s:"DN0496",n:"Gerencia de Operaciones",cr:3,r:["DN0110"]},
+{c:7,s:"PC0344",n:"Formulación y Evaluación de Proyectos I",cr:3,r:["DN0341"]},
+{c:7,s:"PC0462",n:"Legislación Tributaria y Aduanera",cr:3,r:["PC0260","PC0304"]},
+
+{c:8,s:"DN0108",n:"Mercados Bursátiles",cr:4,r:["PC0344"]},
+{c:8,s:"DN0109",n:"Principios de Auditoría Financiera",cr:3,r:["DN0442","PC0304"]},
+{c:8,s:"DN0111",n:"Gestión de la Innovación y Estrategia Competitiva",cr:3,r:["DN0106"],co:["DN0423"]},
+{c:8,s:"DN0112",n:"Gerencia de la Calidad",cr:3,r:["DN0496"]},
+{c:8,s:"DN0322",n:"Ventas y Distribución",cr:3,r:["DN0423"]},
+
+{c:9,s:"DN0113",n:"Administración Mediada por Tecnologías de la Información",cr:3,r:["DN0112"]},
+{c:9,s:"DN0507",n:"Estrategias y Tácticas de Negociación",cr:3,r:["DN0111"]},
+{c:9,s:"OPT1156",n:"Optativos de la Licenciatura (bloque compartido)",cr:12,compartido:true},
+
+{c:10,s:"DN0114",n:"Comunicación Intercultural de los Negocios",cr:3,r:["PC0409"]},
+{c:10,s:"DN0115",n:"Taller de Investigación",cr:3,r:["DN0113"]},
+{c:10,s:"OPT1156",n:"Optativos de la Licenciatura (bloque compartido)",cr:12,compartido:true},
+
+{c:11,s:"OPT1159",n:"Bloque de Siglas de TFG",cr:0}
+];
+
+const totalCreditos=163;
+const clave="mallaDireccionEmpresas_rosa_v1";
+let estado={};
+try{estado=JSON.parse(localStorage.getItem(clave)||"{}")||{};}catch(e){estado={};}
+
+function idCurso(c){return c.s;}
+function estadoDe(c){return estado[idCurso(c)]||"Pendiente";}
+
+function render(){
+ const cont=document.getElementById("malla");
+ cont.innerHTML="";
+ const filtro=(document.getElementById("buscar").value||"").toLowerCase().trim();
+ const romanos=["I","II","III","IV","V","VI","VII","VIII","IX","X","XI"];
+ for(let ciclo=1;ciclo<=11;ciclo++){
+  const lista=cursos.filter(c=>c.c===ciclo&&(!filtro||(c.s+" "+c.n).toLowerCase().includes(filtro)));
+  if(!lista.length)continue;
+  const card=document.createElement("section");card.className="ciclo";
+  const h=document.createElement("h2");h.textContent=romanos[ciclo-1]+" Ciclo";card.appendChild(h);
+  const grid=document.createElement("div");grid.className="cursos";
+  lista.forEach(c=>{
+   const st=estadoDe(c);
+   const btn=document.createElement("button");
+   btn.className="curso"+(st==="Aprobado"?" aprobado":st==="En curso"?" encurso":"");
+   const sig=document.createElement("span");sig.className="sigla";sig.textContent=c.s;
+   const nombre=document.createElement("span");nombre.className="nombre";nombre.textContent=c.n;
+   const meta=document.createElement("span");meta.className="meta";
+   meta.textContent=c.cr+" créditos · "+st;
+   btn.append(sig,nombre,meta);
+   btn.title="Toca para cambiar el estado. Consulta los requisitos por separado.";
+   btn.onclick=()=>cambiar(c);
+   grid.appendChild(btn);
+  });
+  card.appendChild(grid);
+  const sub=document.createElement("div");sub.className="subtotal";
+  sub.textContent="Subtotal: "+cursos.filter(c=>c.c===ciclo).reduce((a,c)=>a+c.cr,0)+" créditos";
+  card.appendChild(sub);cont.appendChild(card);
+ }
+ actualizar();
+}
+
+function cambiar(c){
+ const st=estadoDe(c);
+ estado[idCurso(c)]=st==="Pendiente"?"En curso":st==="En curso"?"Aprobado":"Pendiente";
+ try{localStorage.setItem(clave,JSON.stringify(estado));}catch(e){}
+ render();
+}
+
+function actualizar(){
+ const unicos=new Map();
+ cursos.forEach(c=>{if(!unicos.has(c.s))unicos.set(c.s,c);});
+ const lista=[...unicos.values()];
+ const aprob=lista.filter(c=>estadoDe(c)==="Aprobado");
+ const en=lista.filter(c=>estadoDe(c)==="En curso");
+ const pen=lista.filter(c=>estadoDe(c)==="Pendiente");
+ const creditos=aprob.reduce((a,c)=>a+c.cr,0);
+ const pct=Math.min(100,Math.round(creditos/totalCreditos*100));
+ document.getElementById("porcentaje").textContent=pct+"%";
+ document.getElementById("circulo").style.setProperty("--avance",pct+"%");
+ document.getElementById("creditos").textContent=creditos+" / "+totalCreditos;
+ document.getElementById("nAprobados").textContent=aprob.length;
+ document.getElementById("nCurso").textContent=en.length;
+ document.getElementById("nPendientes").textContent=pen.length;
+ document.getElementById("nTotal").textContent=lista.length;
+ document.getElementById("barra").style.width=pct+"%";
+ document.getElementById("restantes").textContent=Math.max(0,totalCreditos-creditos)+" créditos restantes";
+ document.getElementById("listaProximos").textContent=pen.slice(0,5).map(c=>c.s+" · "+c.n).join("\n")||"¡Has marcado todos los cursos!";
+}
+
+function mostrarRequisitos(){
+ const info=document.getElementById("info");
+ info.innerHTML="<h3>ⓘ Requisitos y correquisitos</h3>";
+ const ul=document.createElement("ul");ul.id="listaRequisitos";
+ cursos.forEach(c=>{
+  if(!(c.r&&c.r.length)&&!(c.co&&c.co.length))return;
+  const li=document.createElement("li");
+  let texto=c.s+" · "+c.n+": ";
+  if(c.r&&c.r.length)texto+="Requisito(s): "+c.r.join(", ")+". ";
+  if(c.co&&c.co.length)texto+="Correquisito(s): "+c.co.join(", ")+".";
+  li.textContent=texto;ul.appendChild(li);
+ });
+ info.appendChild(ul);
+ const p=document.createElement("p");p.className="pequeno";
+ p.textContent="Los requisitos y correquisitos fueron transcritos de las imágenes. Confirma los códigos con el plan oficial vigente antes de matricular.";
+ info.appendChild(p);
+ const volver=document.createElement("button");volver.className="btn";volver.textContent="Volver a instrucciones";
+ volver.onclick=()=>location.reload();info.appendChild(volver);
+ info.scrollIntoView({behavior:"smooth"});
+}
+function irA(id){document.getElementById(id).scrollIntoView({behavior:"smooth"});}
+function reiniciar(){
+ if(confirm("¿Quieres restablecer todos los cursos a pendientes?")){
+  estado={};try{localStorage.removeItem(clave);}catch(e){}
+  render();
+ }
+}
+render();
+</script>
+</body>
+</html>
